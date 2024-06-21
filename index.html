@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja" style="overflow: hidden;">
+    <head>
+        <title>Soullinkmap - HTML5 Canvas WebApp</title>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" >
+        <meta name="keywords" content="フリーウェア,汎用GUI,アイデアプロセッサ,アウトラインプロセッサ,マインドマップ,HTLM5,Canvas,Webアプリ,Webware,WebApp,Freeware,ZUI,MindMap,OutlineProcessor,IdeaProcessor">
+        <meta name="description" content="soullinkmapは、情報間の関連性を自動でビジュアライズすることで、様々な視点で物事を見ることができる、JavaScript+HTML5 Canvasで作られた汎用GUIソフトウェアです。マインドマップ・アウトラインプロセッサ・アイデアプロセッサなどとして活用して下さい。">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=no" />
+        <link rel="SHORTCUT ICON" href="favicon.ico">
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
+        <style type="text/css">
+            html,body {
+                Z-INDEX: 0; BACKGROUND-COLOR: #000000; COLOR: #a6a6ff; OVERFLOW: hidden; HEIGHT: 98%;
+            }
+            input[type=text]{
+               border-radius: 5px;
+               -moz-border-radius: 5px;
+               -webkit-border-radius: 5px;
+               -o-border-radius: 5px;
+               -ms-border-radius: 5px;
+               border:#a9a9a9 1px solid;
+               -moz-box-shadow: inset 0 0 5px rgba(0,0,0,0.2),0 0 2px rgba(0,0,0,0.3);
+               -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2),0 0 2px rgba(0,0,0,0.3);
+               box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2),0 0 2px rgba(0,0,0,0.3);
+               height:20px;
+               padding:0 3px;
+            }
+            input[type=text]:focus {
+               border:solid 1px #20b2aa;
+            }
+            input[type=text], select { 
+               outline: none;
+            }
+            input[type=button],[type=submit]{
+               border-radius: 5px;
+               -moz-border-radius: 5px;
+               -webkit-border-radius: 5px;
+               -o-border-radius: 5px;
+               -ms-border-radius: 5px;
+               border:#a9a9a9 1px solid;
+               -moz-box-shadow: inset 0 0 5px rgba(0,0,0,0.2),0 0 2px rgba(0,0,0,0.3);
+               -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2),0 0 2px rgba(0,0,0,0.3);
+               box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2),0 0 2px rgba(0,0,0,0.3);
+               height:22px;
+               padding:0 3px;
+               cursor:pointer;
+               color:#333;
+               background:#f5f5f5;
+               background-color: #e0e0e0;
+            }
+        </style>
+        <script type="text/javascript">
+            function openHistory() {
+                if ($('languageragioenglish').checked === true) {
+                    window.open("help/history_english.txt", "history");
+                }
+                else {
+                    window.open("help/history.txt", "history");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="body_div" draggable="false" style="border:0px solid gray;width:100%; height:100%;">
+            <div id="canvas_div" draggable="false" style="border:0px solid gray; width:100%; height:100%">
+            <canvas id="main_canvas" draggable="false" style="border:0px solid gray;width:100%;background-color:transparent;"></canvas>
+            </div>
+            <script type="text/javascript" src="js/lib/logger.js"></script>
+            <script type="text/javascript" src="js/core/rect.js"></script>
+            <script type="text/javascript" src="js/core/info.js"></script>
+            <script type="text/javascript" src="js/lib/compress/rawdeflate.js"></script>
+            <script type="text/javascript" src="js/lib/compress/rawinflate.js"></script>
+            <script type="text/javascript" src="js/lib/compress/base64.js"></script>
+            <script type="text/javascript" src="js/lib/toolbox.js"></script>
+            <script type="text/javascript" src="js/lib/translator.js"></script>
+            <script type="text/javascript" src="js/globals.js"></script>
+            <script type="text/javascript" src="js/core/baseobject.js"></script>
+            <script type="text/javascript" src="js/db/core/tablebase.js"></script>
+            <script type="text/javascript" src="js/db/core/table.js"></script>
+            <script type="text/javascript" src="js/db/core/redolog.js"></script>
+            <script type="text/javascript" src="js/db/core/database.js"></script>
+            <script type="text/javascript" src="js/db/appconfig.js"></script>
+            <script type="text/javascript" src="js/db/viewstatus.js"></script>
+            <script type="text/javascript" src="js/db/linkviewfilters.js"></script>
+            <script type="text/javascript" src="js/db/linkviewlocks.js"></script>
+            <script type="text/javascript" src="js/db/soul.js"></script>
+            <script type="text/javascript" src="js/db/soullink.js"></script>
+            <script type="text/javascript" src="js/db/body.js"></script>
+            <script type="text/javascript" src="js/db/bodyformat.js"></script>
+            <script type="text/javascript" src="js/db/localdatabase.js"></script>
+            <script type="text/javascript" src="js/db/tempdatabase.js"></script>
+            <script type="text/javascript" src="js/ui/core/drawbuffer.js"></script>
+            <script type="text/javascript" src="js/ui/core/iojobcontroller.js"></script>
+            <script type="text/javascript" src="js/ui/core/zorder.js"></script>
+            <script type="text/javascript" src="js/ui/core/shapeformat.js"></script>
+            <script type="text/javascript" src="js/ui/core/shape.js"></script>
+            <script type="text/javascript" src="js/ui/core/rangeselectionshape.js"></script>
+            <script type="text/javascript" src="js/ui/core/containershape.js"></script>
+            <script type="text/javascript" src="js/ui/core/backgroundshape.js"></script>
+            <script type="text/javascript" src="js/ui/core/resizableshape.js"></script>
+            <script type="text/javascript" src="js/ui/core/entityviewbase.js"></script>
+            <script type="text/javascript" src="js/ui/core/viewframe.js"></script>
+            <script type="text/javascript" src="js/ui/core/entityviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/core/bodyhierarchymodel.js"></script>
+            <script type="text/javascript" src="js/ui/core/bodynetworkmodel.js"></script>
+            <script type="text/javascript" src="js/ui/core/menuviewbase.js"></script>
+            <script type="text/javascript" src="js/ui/core/menuitem.js"></script>
+            <script type="text/javascript" src="js/ui/core/filterdefinition.js"></script>
+            <script type="text/javascript" src="js/ui/core/linkviewlock.js"></script>
+            <script type="text/javascript" src="js/ui/controls/button.js"></script>
+            <script type="text/javascript" src="js/ui/controls/label.js"></script>
+            <script type="text/javascript" src="js/ui/controls/checkbox.js"></script>
+            <script type="text/javascript" src="js/ui/controls/framebutton.js"></script>
+            <script type="text/javascript" src="js/ui/controls/shapeborder.js"></script>
+            <script type="text/javascript" src="js/ui/controls/scrollbar.js"></script>
+            <script type="text/javascript" src="js/ui/controls/textbox.js"></script>
+            <script type="text/javascript" src="js/ui/controls/inputbox.js"></script>
+            <script type="text/javascript" src="js/ui/controls/connectionline.js"></script>
+            <script type="text/javascript" src="js/ui/controls/pathbar.js"></script>
+            <script type="text/javascript" src="js/ui/controls/searchcontrol.js"></script>
+            <script type="text/javascript" src="js/ui/animation/animationbase.js"></script>
+            <script type="text/javascript" src="js/ui/animation/shapedestructionanimation.js"></script>
+            <script type="text/javascript" src="js/ui/animation/shapecreationanimation.js"></script>
+            <script type="text/javascript" src="js/ui/animation/shapecreationanimation2.js"></script>
+            <script type="text/javascript" src="js/ui/animation/breaktimeanimation.js"></script>
+            <script type="text/javascript" src="js/ui/animation/breaktimeanimation2.js"></script>
+            <script type="text/javascript" src="js/ui/animation/breaktimeanimation3.js"></script>
+            <script type="text/javascript" src="js/ui/animation/shapetransferanimation.js"></script>
+            <script type="text/javascript" src="js/ui/animation/pointinganimation.js"></script>
+            <script type="text/javascript" src="js/ui/animation/splashanimation.js"></script>
+            <script type="text/javascript" src="js/ui/animation/linkviewformatanimation.js"></script>
+            <script type="text/javascript" src="js/ui/view/entityformat.js"></script>
+            <script type="text/javascript" src="js/ui/view/entity.js"></script>
+            <script type="text/javascript" src="js/ui/view/linkviewentity.js"></script>
+            <script type="text/javascript" src="js/ui/view/omittedtextmenuitem.js"></script>
+            <script type="text/javascript" src="js/ui/view/specialmenuitem.js"></script>
+            <script type="text/javascript" src="js/ui/view/coloritem.js"></script>
+            <script type="text/javascript" src="js/ui/view/colormenuitem.js"></script>
+            <script type="text/javascript" src="js/ui/view/fontitem.js"></script>
+            <script type="text/javascript" src="js/ui/view/fontmenuitem.js"></script>
+            <script type="text/javascript" src="js/ui/view/editview.js"></script>
+            <script type="text/javascript" src="js/ui/view/birdview.js"></script>
+            <script type="text/javascript" src="js/ui/view/linkview.js"></script>
+            <script type="text/javascript" src="js/ui/view/mainmenuview.js"></script>
+            <script type="text/javascript" src="js/ui/view/selectedshapesmenuview.js"></script>
+            <script type="text/javascript" src="js/ui/view/saveandloadmenuview.js"></script>
+            <script type="text/javascript" src="js/ui/view/savedmaplistview.js"></script>
+            <script type="text/javascript" src="js/ui/view/viewmodemenuview.js"></script>
+            <script type="text/javascript" src="js/ui/view/entityformatsettingview.js"></script>
+            <script type="text/javascript" src="js/ui/view/viewformatsettingview.js"></script>
+            <script type="text/javascript" src="js/ui/view/similarsoulslistview.js"></script>
+            <script type="text/javascript" src="js/ui/view/linkconditionlistview.js"></script>
+            <script type="text/javascript" src="js/ui/view/colorsettingbox.js"></script>
+            <script type="text/javascript" src="js/ui/view/fontsettingbox.js"></script>
+            <script type="text/javascript" src="js/ui/view/birdviewdirectionsettingview.js"></script>
+            <script type="text/javascript" src="js/ui/view/viewsettingview.js"></script>
+            <script type="text/javascript" src="js/ui/view/modaldialogframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/mainmenuviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/birdviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/selectedshapesmenuviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/saveandloadmenuviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/savedmaplistviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/viewmodemenuviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/textboxframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/exportandimporttextboxframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/inputboxframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/hyperlinkurlboxframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/colorsettingboxframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/fontsettingboxframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/entityformatsettingviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/viewformatsettingviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/similarsoulslistviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/linkconditionlistviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/birdviewdirectionsettingviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/viewsettingviewframe.js"></script>
+            <script type="text/javascript" src="js/ui/view/soulmastermenuitem.js"></script>
+            <script type="text/javascript" src="js/actions/actionbase.js"></script>
+            <script type="text/javascript" src="js/actions/mainaction.js"></script>
+            <script type="text/javascript" src="js/actions/selectedshapesaction.js"></script>
+            <script type="text/javascript" src="js/actions/dataaccessaction.js"></script>
+            <script type="text/javascript" src="js/ui/soulmaster.js"></script>
+            <script type="text/javascript" src="js/ui/systembackground.js"></script>
+            <script type="text/javascript" src="js/ui/mainbackground.js"></script>
+            <script type="text/javascript" src="js/ui/canvasmanager.js"></script>
+            <script type="text/javascript" src="js/main.js"></script>
+            <noscript>javascriptをonにしてください。</noscript> 
+            <div id="app_footer" draggable="false" style="border:0px solid gray; width:98%;z-index:999;" align="right">
+                <table>
+                    <tr><td>
+                    <div id="languagechoice">
+                        <font size=2>
+                        <input id="languageragioenglish" type="radio" name="language" value="English">English
+                        <input id="languageragiojapanese" type="radio" name="language" value="Japanese" checked>Japanese
+                        </font>
+                    </div>
+                    </td>
+                    <td align="left">
+                        <font size=1><a href="javascript:openHistory()">Updated: 2016/06/28</a></font>
+                    </td>
+                    <td>
+                    <div id="switch_display_footer">&nbsp;>>></div>
+                    </td>
+                    </tr>
+                </table>
+                <table id="app_footer_table" border=0 cellspacing=1 cellpadding=1 style="display:none;">
+                    <tr>
+                        <td>
+                            <form method=get action="http://www.google.co.jp/search" target = "_blank">
+                            <input id="searchtext" name=q type="text" value="" size=20 style="background-color: #e0e0e0;">
+                            <input id="searchbutton" type="button" value="Soul Search" style="">
+                            <input id="wikibutton" type="button" value=" Wikipedia ">
+                            <input type=submit name=btnG value="  Google  ">
+                            </form>
+                        </td>
+                        <td align="right">
+                            <font size=2>Copyright (c) 2015 soullinkmap</font><br><font size=1>Released under the <a href="http://opensource.org/licenses/mit-license.php">MIT license</a></font>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            
+              ga('create', 'UA-66624240-2', 'auto');
+              ga('send', 'pageview');
+            
+            </script>
+        </div>
+    </body>
+</html>

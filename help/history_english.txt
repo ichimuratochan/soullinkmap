@@ -1,0 +1,54 @@
+..: History of Soullinkmap :..
+
+2016/06/28 Bug fixes.
+2016/06/05 Changed the design of the View Menu. Bug fixes.
+2016/05/22 Two improvement of operability below.
+           1. Long touch to zoom-in and zoom-out for Smartphones and Tablets.
+           2. Double click(tap) the Path Bar to surface from the current Body.
+2016/05/19 Fixed a bug that the edge of the dialog is displayed outside
+           of the screen when using the Smartphones and Tablets.
+           Improved the process of creating Body by opening the Edit Dialog
+           automatically after creating a Body.
+2016/05/01 Supported Android Smartphones and Tablets.
+           Zooming by pinch is not yet supported. So please continue to
+           use Zoom-In and Zoom-Out of Menu Icon.
+2016/04/24 Imporoved following functions to make it easier to explore
+           bodies and souls by opening views one after another.
+            Open New View function takes over the view mode of original
+            view's view mode to new View.
+            Open New View function relocated to the first position in the
+            Right Click Context Menu.
+2016/04/13 Improved algorithm to relocate the network diagram in Link View.
+2016/03/19 Bug fixes.
+2016/02/20 Addes new function which imports XML formatted MAP file into
+           another MAP.
+2016/01/11 Added new option which you can choose whether you want to show
+           specific Soul in a Bird View after opening the specified MAP or not,
+           when you create a URL link to the other MAP by JSONP format.
+2016/01/01 Added function to search specific Link or Body in the View by
+           Keyword.
+2015/12/05 Added function which you can save your MAP in your Browser
+           using HTML5 WebStorage.
+           Due to this change, XML and JSONP Output and Input function
+           changed its name to Export/Import function.
+2015/11/18 Bug fixes.
+2015/11/11 Improve the behavior after going back to the Body
+           from another Body to restore the last coordinate of
+           the displayed area of the Edit View.
+           Bug fixes.
+2015/11/01 Soul Release menu added in Menu Icon.
+           View Mode Menu's name has changed to View Menu.
+           Save As Image menu added to View Menu.
+2015/10/31 Bug fixes.
+2015/10/16 English Help created.
+2015/10/03 Max Button added to text edit dialog.
+2015/09/29 Bug fixes.
+2015/09/26 Adjust the scroll speed when scrolling the dialog menus like
+           color setting dialog with mouse wheel.
+2015/09/15 Provided Help Contents in Japanese and English.
+           However the English Help Contents is still under construction...
+2015/09/12 Shortcut key added(detailed in Help Contens).
+           Change the [Break] menu's animation.
+           Improve the Link [Format(push!)] menu function for Link View.
+2015/09/05 Bug fixes.
+2015/08/16 Released.
