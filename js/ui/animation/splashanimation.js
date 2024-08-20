@@ -23,7 +23,6 @@ SplashAnimation.prototype = toolBox.extend(new AnimationBase(), {
         this.shapeFormat.textVerticalAlign = 'middle';
         this.shapeFormat.textFillStyle = '#b0c4de';
 
-//        this.text = 'soullinkmap';
         this.text = 'Let there be change';
 
         this.alive = true;
