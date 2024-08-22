@@ -244,7 +244,7 @@ Entity.prototype = toolBox.extend(new ResizableShape(), {
             );
             if (this.pastedFromBodyId !== '') {
                 this.soulMaster.dataAccessAction.copyChildrensBodyRecursive(this.pastedFromBodyId, this.bodyId);
-this.soulMaster.dataAccessAction.showBodyLog('ENTITY');
+                this.soulMaster.dataAccessAction.showBodyLog('ENTITY');
             }
         }
         else {
