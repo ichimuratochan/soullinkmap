@@ -52,6 +52,15 @@ SelectedShapesAction.prototype = toolBox.extend(new ActionBase(), {
         }
         this.soulMaster.targetBackGround.clearSelectedShapes();
     }
+,   generateBodiesByAI: function() {
+        var targetShape = null;
+        for (var i=0;i<this.soulMaster.targetBackGround.selectedShapes.length;i++) {
+            targetShape = this.getTargetShape(this.soulMaster.targetBackGround.selectedShapes[i]);
+            if (targetShape.isEntity) {
+                alert(targetShape.text);
+            }
+        }
+    }
 ,   copySelectedEntities: function() {
         this.soulMaster.clipBoard.length = 0;
         var targetShape = null;

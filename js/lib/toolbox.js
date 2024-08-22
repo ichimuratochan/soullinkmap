@@ -1027,6 +1027,17 @@ ToolBox.prototype = {
 ,   executeJavaScript: function(_js) {
         eval(_js);
     }
+,   generateRelatedKeywords: function(_keyword) {
+        
+    }
+,   askToAI: function(_prompt) {
+        var keywordJson = null;
+        
+        return keywordJson;
+    }
+,   executeAPI: function() {
+        
+    }
 /*
 ,   startLoadingDialog: function(_backGroundShape) {
 

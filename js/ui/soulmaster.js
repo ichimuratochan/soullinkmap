@@ -376,7 +376,8 @@ SoulMaster.prototype = toolBox.extend(new Shape(), {
 //                        soulMasterMenuItem.setMenuCommand(this.menuCommandStartBreakTimeAnimation, translator.t('休憩\n１'));
 //                        soulMasterMenuItem.setMenuCommand(this.menuCommandStartBreakTimeAnimation2, translator.t('休憩\n２'));
 //                        soulMasterMenuItem.setMenuCommand(this.menuCommandStartBreakTimeAnimation2, translator.t('休憩'));
-                        soulMasterMenuItem.setMenuCommand(this.menuCommandHelp, translator.t('ヘルプ'));
+//                        soulMasterMenuItem.setMenuCommand(this.menuCommandHelp, translator.t('ヘルプ'));
+                        soulMasterMenuItem.setMenuCommand(this.menuCommandGenerateByAI, translator.t('AI生成'));
                     }
                     else if (this.dockedShapeInfos[i].info2 === toolBox.DOCK_POSITION_TOP_RIGHT_CORNER) {
                         soulMasterMenuItem.setMenuCommand(this.menuCommandZoomIn, translator.t('ズーム\nイン'));
@@ -670,6 +671,9 @@ SoulMaster.prototype = toolBox.extend(new Shape(), {
     }
 ,   menuCommandHelp: function() {
         this.soulMaster.mainAction.openHelp();
+    }
+,   menuCommandGenerateByAI: function() {
+        this.soulMAster.selectedShapesAction.generateBodiesByAI();
     }
 ,   menuCommandStartBreakTimeAnimation: function() {
         this.soulMaster.mainAction.startBreakTimeAnimation();

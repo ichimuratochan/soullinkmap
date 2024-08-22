@@ -96,6 +96,7 @@ Translator.prototype = {
         ,   '新規ビューで開く'              : 'Open New View'
         ,   '選択Body間を結線'              : 'Connect Line Between Bodies'
         ,   'Body9個生成'                   : 'Create 9 Bodies'
+        ,   'AI生成'                       : 'Generate by AI'
         ,   '長方形⇔角丸長方形'            : 'Change Shape Figure'
         ,   'ビュードッキング'              : 'Dock View'
         ,   'ビュードッキング解除'          : 'Undock View'
