@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <title>Who's Who Project Redirect Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to bottom right, #b455aa, #ffffff, #7500c0);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background: rgba(251, 245, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      margin-bottom: 20px;
+    }
+
+    .message h1 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #6A5ACD;
+    }
+
+    .message p {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+
+    .link-button,
+    .primary-link {
+      display: block;
+      padding: 12px 20px;
+      margin: 10px 0;
+      text-decoration: none;
+      color: #ffffff;
+      background-color: #7500c0;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      font-size: 16px;
+    }
+
+    .link-button:hover,
+    .primary-link.enabled:hover {
+      background-color: #8f33e6;
+    }
+
+    .primary-link {
+      background-color: #7500c0;
+      font-size: 18px;
+      font-weight: bold;
+      pointer-events: none;
+      opacity: 0.5;
+      background-color: #e6e6dc;
+      color: #ffffff;
+      border: 2px solid #ffffff;
+      cursor: not-allowed;
+    }
+
+    .primary-link.enabled {
+      pointer-events: auto;
+      opacity: 1;
+      background-color: #7500c0;
+      border: 2px solid #7500c0;
+      cursor: pointer;
+    }
+
+    .primary-link.enabled:hover {
+      background-color: #8f33e6;
+    }
+
+    .faq-link {
+      display: block;
+      margin-top: 20px;
+      font-size: 16px;
+      color: #6A5ACD;
+      text-decoration: underline;
+    }
+
+    .faq-link:hover {
+      color: #836FFF;
+    }
+
+    /* iOS注意メッセージのスタイル */
+    .ios-caution {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .ios-caution-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 400px;
+      background-color: #FFFFFF;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .ios-caution-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .warning-icon {
+      color: #FF9800;
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    .error-image-container {
+      padding: 10px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .error-image {
+      max-width: 90%;
+      height: auto;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      justify-content: flex-start;
+    }
+
+    .checkbox-container input {
+      width: auto;
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
+
+    .checkbox-container label {
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .close-button {
+      width: 100%;
+      padding: 12px;
+      background-color: #7500c0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .close-button:hover {
+      background-color: #8f33e6;
+    }
+  </style>
+  <script type="text/javascript">
+    document.onreadystatechange = function () {
+      if (document.readyState == "complete") {
+        redirectByAgent();
+        setupDownloadLinks();
+      }
+    }
+
+    function redirectByAgent() {
+      var baseUrl = getBaseUrlByEnv();
+      var redirectUrl = baseUrl;
+      var queryParams = "";
+      var vals = new Array();
+      const userAgent = navigator.userAgent;
+
+      // 先にクエリパラメータを処理する
+      if (location.search != "") {
+        vals = location.search.substr(1).split("&");
+        for (var i in vals) {
+          vals[i] = vals[i].replace(/\+/g, " ").split("=");
+        }
+
+        for (var i in vals) {
+          if (vals[i][0].toLowerCase() == "data") {
+            queryParams = getQueryParams(baseUrl, vals[i][1]);
+            break;
+          }
+        }
+      }
+
+      // Create redirect url by userAgent
+      if (userAgent.match(/iPhone|iPad|iPod|Android/i)) {
+        if (userAgent.match(/Edg/i)) {
+          // https link - そのまま
+        } else if (userAgent.match(/iPhone|iPad|iPod/i)) {
+          // Deeplink for iOS
+          redirectUrl = baseUrl.replace("https://", "microsoft-edge://");
+          document.getElementById("edge-ios").style.display = "block";
+          
+          // iOSの場合、注意メッセージを表示するかチェック
+          if (shouldShowIosCaution()) {
+            document.getElementById("ios-caution").style.display = "block";
+            // 注意メッセージが表示されている場合は自動遷移しない
+            window.pendingRedirectUrl = redirectUrl + queryParams;
+            document.getElementById("open-apps").href = redirectUrl + queryParams;
+            return; // ここで処理を終了し、自動リダイレクトを行わない
+          }
+        } else if (userAgent.match(/Android/i)) {
+          // Deeplink for Android
+          redirectUrl = "microsoft-edge:" + baseUrl;
+          document.getElementById("edge-android").style.display = "block";
+          // iOS向け要素を明示的に非表示
+          document.getElementById("ios-caution").style.display = "none";
+        }
+      } else {
+        document.getElementById("access-from-laptop").style.display = "block";
+        return;
+      }
+
+      if (!userAgent.match(/Edg/i)) {
+        document.getElementById("edge-download-links").style.display = "block";
+      }
+
+      // Set the primary link URL
+      document.getElementById("open-apps").href = redirectUrl + queryParams;
+
+      // 自動リダイレクト
+      setTimeout(() => {
+        window.location.href = redirectUrl + queryParams;
+      }, 100);
+    }
+    
+    // Cookieの取得ヘルパー関数
+    function getCookie(name) {
+        // デバイスタイプを確認し、iOS以外ではCookieを操作しない
+        if (!navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+            return null;
+        }
+
+        const cookieValue = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith(name + "="));
+        
+        if (cookieValue) {
+            return cookieValue.split("=")[1];
+        }
+        
+        return null;
+    }
+    
+    // Cookieの設定ヘルパー関数（30日間有効）
+    function setCookie(name, value) {
+        // デバイスタイプを確認し、iOS以外ではCookieを操作しない
+        if (!navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+            return;
+        }
+
+        // 30日間有効なCookieを設定
+        let expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 30);
+        
+        document.cookie = `${name}=${value}; expires=${expiryDate.toUTCString()}; path=/`;
+    }
+
+    // 注意メッセージの表示判定
+    function shouldShowIosCaution() {
+      try {
+        // Cookieから設定を取得（リダイレクトページ用の独自Cookie名を使用）
+        return getCookie("hideIosCaution_redirect") !== "true";
+      } catch (e) {
+        // エラーが発生した場合は常に表示
+        return true;
+      }
+    }
+
+    // 次回から表示しない設定の保存
+    function saveHideIosCautionPreference() {
+      try {
+        if (document.getElementById("hide-caution-checkbox").checked) {
+          // 30日間有効なCookieとして保存（リダイレクトページ用の独自Cookie名を使用）
+          setCookie("hideIosCaution_redirect", "true");
+        }
+      } catch (e) {
+        // エラーが発生した場合は無視
+        console.error("Cookie保存エラー:", e);
+      }
+    }
+
+    // 注意メッセージを閉じる処理
+    function closeIosCaution() {
+      saveHideIosCautionPreference();
+      document.getElementById("ios-caution").style.display = "none";
+      document.getElementById("edge-download-links").style.display = "block";
+      
+      // 保存したURLを通常のボタンにも設定する
+      document.getElementById("open-apps").href = window.pendingRedirectUrl;
+      
+      // 自動リダイレクト
+      setTimeout(() => {
+        window.location.href = window.pendingRedirectUrl;
+      }, 100);
+    }
+
+    function getBaseUrlByEnv() {
+      var baseUrl;
+      var envId;
+      var appId;
+
+      if (window.location.href.startsWith("https://org11e64bb7.crm.dynamics.com/WebResources/ww_redirect")) {
+        // prod
+        envId = "66d830c7-b955-487f-804f-818d2a1bd32a";
+        appId = "cb22b6ac-fed4-4ccd-9991-6d4bbff4590d";
+      } else if (window.location.href.startsWith("https://org21a90083.crm.dynamics.com/WebResources/ww_redirect")) {
+        // stag
+        envId = "7b742607-aab4-4064-bff3-7c3a75d9c9c4";
+        appId = "8becc5d0-1595-48ed-b28b-901289075940";
+      } else if (window.location.href.startsWith("https://org283e3080.crm.dynamics.com/WebResources/ww_redirect")) {
+        // dev
+        envId = "c5c3f813-fb4a-e4c4-a7dd-e3f3b9c74307";
+        appId = "366c0b5d-2532-49ad-9577-96b232ad3fdb";
+      }
+      baseUrl = "https://apps.powerapps.com/play/e/" + envId + "/a/" + appId + "?tenantId=e0793d39-0939-496d-b129-198edd916feb&skipMobileRedirect=1&hidenavbar=true";
+
+      // Set logo URL
+      setLogoUrl();
+
+      return baseUrl;
+    }
+
+    function setLogoUrl() {
+      var logoBaseUrl;
+      var PowerAppsErrorImageBaseUrl;
+
+      if (window.location.href.startsWith("https://org11e64bb7.crm.dynamics.com/WebResources/ww_redirect")) {
+        // prod
+        logoBaseUrl = "https://org11e64bb7.crm.dynamics.com/WebResources/ww_Logo_L_WH_image";
+        PowerAppsErrorImageBaseUrl = "https://org11e64bb7.crm.dynamics.com/WebResources/ww_PowerAppsError_image";
+      } else if (window.location.href.startsWith("https://org21a90083.crm.dynamics.com/WebResources/ww_redirect")) {
+        // stag
+        logoBaseUrl = "https://org21a90083.crm.dynamics.com/WebResources/ww_Logo_L_WH_image";
+        PowerAppsErrorImageBaseUrl = "https://org21a90083.crm.dynamics.com/WebResources/ww_PowerAppsError_image";
+      } else if (window.location.href.startsWith("https://org283e3080.crm.dynamics.com/WebResources/ww_redirect")) {
+        // dev
+        logoBaseUrl = "https://org283e3080.crm.dynamics.com/WebResources/ww_Logo_L_WH_image";
+        PowerAppsErrorImageBaseUrl = "https://org283e3080.crm.dynamics.com/WebResources/ww_PowerAppsError_image";
+      }
+
+      // Set the logo URL
+      document.getElementById("appLogo").src = logoBaseUrl;
+      
+      // Set the PowerApps Error image URL
+      if (document.getElementById("powerAppsErrorImage") && PowerAppsErrorImageBaseUrl) {
+        document.getElementById("powerAppsErrorImage").src = PowerAppsErrorImageBaseUrl;
+      }
+    }
+
+    function getQueryParams(redirectUrl, datavalue) {
+      var queryParams = "";
+
+      if (datavalue != "") {
+        var vals = new Array();
+
+        vals = decodeURIComponent(datavalue).split("&");
+        for (var i in vals) {
+          vals[i] = vals[i].replace(/\+/g, " ").split("=");
+        }
+
+        for (var i in vals) {
+          queryParams += (redirectUrl.includes('?') ? '&' : '?') + vals[i][0] + "=" + vals[i][1];
+        }
+      }
+
+      return queryParams;
+    }
+
+    function setupDownloadLinks() {
+      const downloadLinks = document.querySelectorAll('#download-links a');
+      const openAppLink = document.getElementById('open-apps');
+
+      downloadLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          openAppLink.classList.add('enabled');
+        });
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <img id="appLogo" alt="App Logo" class="logo">
+    <div id="access-from-laptop" style="display:none" class="message">
+      <h1>モバイルからアクセスしてください</h1>
+      <p>Please access from your mobile device.</p>
+    </div>
+    <div id="edge-download-links" style="display:none">
+      <div class="message">
+        <h1>This App requires Microsoft Edge to launch</h1>
+        <p>Please download Microsoft Edge from the links below.</p>
+        <div id="download-links">
+          <a id="edge-ios" href="https://apps.apple.com/us/app/microsoft-edge-ai-browser/id1288723196"
+            class="link-button" style="display:none">Download iOS Edge</a>
+          <a id="edge-android" href="https://play.google.com/store/apps/details?id=com.microsoft.emmx"
+            class="link-button" style="display:none">Download Android Edge</a>
+        </div>
+      </div>
+      <p>If you already have Microsoft Edge installed</p>
+      <a id="open-apps" class="primary-link">Open Who's Who Apps</a>
+    </div>
+    
+    <!-- iOS注意メッセージ -->
+    <div id="ios-caution" class="ios-caution">
+      <div class="ios-caution-content">
+        <div class="ios-caution-header">
+          <span class="warning-icon">⚠️</span>
+          <strong>Attention(iPhoneユーザー向け)</strong>
+        </div>
+        <p><strong>PowerAppsモバイルアプリをアンインストールしてください。</strong>アプリがインストールされていると下図のようなエラーが発生しアプリが起動できません。</p>
+        <div class="error-image-container">
+          <img id="powerAppsErrorImage" src="" alt="PowerAppsエラー画面" class="error-image">
+        </div>
+        <div class="checkbox-container">
+          <input type="checkbox" id="hide-caution-checkbox">
+          <label for="hide-caution-checkbox" style="font-weight: normal;">次回からこのメッセージを表示しない</label>
+        </div>
+        <button class="close-button" onclick="closeIosCaution()">Open Who's Who Apps</button>
+      </div>
+    </div>
+    
+    <a href="https://go.accenture.com/whoswhoprojectfaq" class="faq-link">FAQ</a>
+  </div>
+</body>
+
+</html>
